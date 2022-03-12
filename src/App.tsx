@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { CommonBaseRoutesInfo, Profile } from 'components';
+import { AuthProvider } from 'contexts/AuthContext';
+import { IEvent } from 'types/interfaces';
 
 function App() {
+  const [errors, setErrors] = useState<IEvent[]>([]);
+  const [infos, setInfos] = useState<IEvent[]>([]);
+
+  const addError = (text: IEvent['text']) => {
+    const id = errors[errors.length - 1].id + 1;
+    setErrors([...errors, { id, text }]);
+  };
+
+  const addInfo = (text: IEvent['text']) => {
+    const id = infos[infos.length - 1].id + 1;
+    setInfos([...infos, { id, text }]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider onError={addError} onInfo={addInfo}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<CommonBaseRoutesInfo />}>
+            <Route path="profile" element={<Profile />} />
+            <Route path="/login" element={<div>test</div>} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
