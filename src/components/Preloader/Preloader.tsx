@@ -1,18 +1,12 @@
-import styles from "./Preloader.module.css";
-import { useAuth } from "hooks";
+import { LogoIcon } from 'assets/icons';
+import styles from './Preloader.module.scss';
 
 const Preloader = () => {
-	// const { initialCheckIsPending } = useAuth();
-	return (
-		<>
-			{
-				// initialCheckIsPending &&
-				// <section className={styles.wrapper}>
-				// 	<div className={styles.content}>Preloader</div>
-				// </section>
-			}
-		</>
-	);
+  return (
+    <div className={styles.wrapper}>
+      <LogoIcon />
+    </div>
+  );
 };
 
 export default Preloader;

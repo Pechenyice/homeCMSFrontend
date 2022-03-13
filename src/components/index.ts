@@ -6,3 +6,4 @@ export { default as CommonBaseRoutesInfo } from './CommonRoutesNesting/CommonBas
 
 export * from './Auth/Auth';
 export * from './Main/Main';
+export * from './Header/Header';

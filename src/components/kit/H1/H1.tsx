@@ -1,15 +1,9 @@
-import { FC, ReactNode } from "react";
-import { combineClasses } from "utils";
-import styles from "./H1.module.scss";
+import { FC, HTMLAttributes } from 'react';
+import { combineClasses } from 'utils';
+import styles from './H1.module.scss';
 
-interface Props {
-	classes?: string[];
-}
+export const H1: FC<HTMLAttributes<HTMLHeadingElement>> = (props) => {
+  const { children, className } = props;
 
-export const H1: FC<Props> = (props) => {
-	const { children, classes = [] } = props;
-
-	return (
-		<h1 className={combineClasses(styles.styled, ...classes)}>{children}</h1>
-	);
+  return <h1 className={combineClasses(styles.styled, className ?? '')}>{children}</h1>;
 };

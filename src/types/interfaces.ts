@@ -40,3 +40,28 @@ export interface IEvent {
 export interface IErrorsList {
   list: IEvent[];
 }
+
+export interface IInputsState {
+  [key: string]: IInput;
+}
+
+export interface IInput {
+  value: string;
+  validator: (value: string | number) => IValidationResult;
+  error: IInputError;
+}
+
+export interface IInputError {
+  exist: boolean;
+  text: string;
+}
+
+export interface IValidationResult {
+  success: boolean;
+  text: string;
+}
+
+export interface IValidationObject {
+  value: string | number;
+  validator: (value: string | number) => IValidationResult;
+}
