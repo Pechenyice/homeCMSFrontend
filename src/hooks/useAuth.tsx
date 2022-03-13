@@ -9,6 +9,7 @@ export const useAuth = () => {
   const isError = status === EAuthStatus.ERROR;
   const isSuccess = status === EAuthStatus.SUCCESS;
   const isAuthenticated = profile && isSuccess;
+  const isAdmin = profile && profile.isAdmin;
   return {
     status,
     profile,
@@ -19,6 +20,7 @@ export const useAuth = () => {
     isError,
     isSuccess,
     isAuthenticated,
+    isAdmin,
     initialCheckIsPending,
   };
 };

@@ -1,5 +1,6 @@
 import { API } from 'api';
 import { Auth } from 'components';
+import { useErrors } from 'hooks';
 import { createContext, FC, useEffect, useState } from 'react';
 import { EAuthStatus } from 'types/enums';
 import { IProfile, IUser } from 'types/interfaces';
@@ -13,14 +14,9 @@ export interface IAuthContextValues {
   initialCheckIsPending: boolean;
 }
 
-interface Props {
-  onError: (text: string) => void;
-  onInfo: (text: string) => void;
-}
+export const AuthContext = createContext({} as IAuthContextValues);
 
-export const AuthContext = createContext({} as unknown as IAuthContextValues);
-
-export const AuthProvider: FC<Props> = ({ children, onError }) => {
+export const AuthProvider: FC = ({ children }) => {
   const [state, setState] = useState<
     Pick<IAuthContextValues, 'status' | 'profile' | 'initialCheckIsPending'>
   >({
@@ -28,6 +24,8 @@ export const AuthProvider: FC<Props> = ({ children, onError }) => {
     profile: null,
     initialCheckIsPending: true,
   });
+
+  const { addError } = useErrors();
 
   const internalAuthCheck = async () => {
     try {
@@ -48,7 +46,7 @@ export const AuthProvider: FC<Props> = ({ children, onError }) => {
         });
       }
     } catch (e) {
-      onError('Произошла ошибка при проверке подлинности пользователя. Попробуйте позже.');
+      addError('Произошла ошибка при проверке подлинности пользователя. Попробуйте позже.');
     }
   };
 
@@ -59,10 +57,10 @@ export const AuthProvider: FC<Props> = ({ children, onError }) => {
         setState({ ...state, status: EAuthStatus.SUCCESS, profile: profile });
       } else {
         setState({ ...state, status: EAuthStatus.ERROR, profile: null });
-        onError('Такого пользователя не существует!');
+        addError('Такого пользователя не существует!');
       }
     } catch (e) {
-      onError('Произошла ошибка при входе в аккаунт. Попробуйте позже.');
+      addError('Произошла ошибка при входе в аккаунт. Попробуйте позже.');
     }
   };
 

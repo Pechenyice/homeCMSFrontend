@@ -1,3 +1,12 @@
+import { useErrors } from 'hooks';
+import { Link } from 'react-router-dom';
+
 export const Main = () => {
-  return <div>main page</div>;
+  const { addError } = useErrors();
+  return (
+    <>
+      <div onClick={() => addError('from main')}>main page</div>
+      <Link to={'/login'}>to login</Link>
+    </>
+  );
 };

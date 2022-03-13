@@ -6,7 +6,7 @@ const CommonBaseRoutesInfo = () => {
     <>
       <Main />
       <Preloader />
-      <ErrorsList />
+      {/* <ErrorsList /> */}
       <Outlet />
     </>
   );
