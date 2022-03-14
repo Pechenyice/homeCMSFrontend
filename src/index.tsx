@@ -1,23 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { AuthProvider } from 'contexts/AuthContext';
-import { ErrorsProvider } from 'contexts/ErrorsContext';
-import { InfosProvider } from 'contexts/InfosContext';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { AuthProvider } from "contexts/AuthContext";
+import { ErrorsProvider } from "contexts/ErrorsContext";
+import { InfosProvider } from "contexts/InfosContext";
+import { ErrorBoundary } from "components";
 // import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ErrorsProvider>
-      <InfosProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </InfosProvider>
-    </ErrorsProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<ErrorBoundary>
+			<ErrorsProvider>
+				<InfosProvider>
+					<AuthProvider>
+						<App />
+					</AuthProvider>
+				</InfosProvider>
+			</ErrorsProvider>
+		</ErrorBoundary>
+	</React.StrictMode>,
+	document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
