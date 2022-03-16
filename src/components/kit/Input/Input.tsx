@@ -31,6 +31,8 @@ export const Input = (props: Props & InputHTMLAttributes<HTMLInputElement>) => {
     setIsHidden(!isHidden);
   };
 
+  const isPassword = type === 'password' || !isHidden;
+
   return (
     <div className={combineClasses(styles.wrapper, className ?? '')} {...rest}>
       {heading && <H3 className={styles.heading}>{heading}</H3>}
@@ -42,10 +44,14 @@ export const Input = (props: Props & InputHTMLAttributes<HTMLInputElement>) => {
           onChange={onChange}
           onBlur={onBlur}
           onFocus={onFocus}
-          className={combineClasses(styles.input, error?.exist ? styles.input_error : '')}
+          className={combineClasses(
+            styles.input,
+            error?.exist ? styles.input_error : '',
+            isPassword ? styles.input_password : ''
+          )}
         />
         {error?.exist && <H5 className={styles.error}>{error.text}</H5>}
-        {(type === 'password' || !isHidden) && (
+        {isPassword && (
           <div className={styles.icon}>
             {isHidden ? (
               <PasswordHiddenIcon onClick={() => handleNewMode()} />

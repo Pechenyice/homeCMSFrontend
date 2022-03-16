@@ -2,17 +2,20 @@ import { IProfile, ISelectValue, IUser } from 'types/interfaces';
 
 export const FakeUser: IProfile = {
   id: 1,
-  isAdmin: false,
   login: 'test',
   name: 'test',
   fullName: 'test',
-  type: { id: 0, value: 'test' },
-  district: { id: 0, value: 'test' },
+  type: 0,
+  district: 0,
   educationLicense: true,
   medicineLicense: false,
   innovationGround: true,
   supervisor: 'test',
   responsible: 'test',
+
+  isAdmin: false,
+  status: 1,
+  cause: null,
 };
 
 export async function checkAuth(ms: number): Promise<IProfile | null> {

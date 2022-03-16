@@ -26,6 +26,10 @@
     transition: 0.2s;
   }
 
+  &_password {
+    padding-right: 60px;
+  }
+
   &::placeholder {
     font-size: 18px;
     line-height: 22px;

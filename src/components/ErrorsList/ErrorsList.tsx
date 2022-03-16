@@ -1,18 +1,18 @@
-import styles from 'ErrorsList.module.css';
+import { Event } from 'components/kit';
+import styles from './ErrorsList.module.scss';
 import { useErrors } from 'hooks';
 import { IEvent } from 'types/interfaces';
 
 const ErrorsList = () => {
-  const { errors, addError, removeError } = useErrors();
+  const { errors, removeError } = useErrors();
 
   return (
-    <section>
+    <section className={styles.wrapper}>
       {errors.map((e: IEvent, i: number) => (
-        <p onClick={() => removeError(e.id)} key={i}>
-          {e.text} {e.id}
-        </p>
+        <Event isError onClick={() => removeError(e.id)} key={i}>
+          {e.text}
+        </Event>
       ))}
-      <button onClick={() => addError('new')}>add</button>
     </section>
   );
 };

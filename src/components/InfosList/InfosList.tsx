@@ -1,20 +1,20 @@
-import styles from 'InfosList.module.scss';
+import { Event } from 'components/kit';
+import styles from './InfosList.module.scss';
 import { useInfos } from 'hooks';
 import { IEvent } from 'types/interfaces';
 
-const ErrorsList = () => {
-  const { infos, addInfo, removeInfo } = useInfos();
+const InfosList = () => {
+  const { infos, removeInfo } = useInfos();
 
   return (
-    <section>
+    <section className={styles.wrapper}>
       {infos.map((e: IEvent, i: number) => (
-        <p onClick={() => removeInfo(e.id)} key={i}>
-          {e.text} {e.id}
-        </p>
+        <Event onClick={() => removeInfo(e.id)} key={i}>
+          {e.text}
+        </Event>
       ))}
-      <button onClick={() => addInfo('new')}>add</button>
     </section>
   );
 };
 
-export default ErrorsList;
+export default InfosList;

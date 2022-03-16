@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
-import { Main, ErrorsList, Preloader } from 'components';
+import { Header } from 'components';
 
 const CommonBaseRoutesInfo = () => {
   return (
     <>
-      <Main />
+      <Header />
       <Outlet />
     </>
   );

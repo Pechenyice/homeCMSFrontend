@@ -1,3 +1,5 @@
+import { EProposalStatus } from './enums';
+
 export interface ISelectValue {
   id: number;
   value: string;
@@ -10,17 +12,20 @@ export interface IUser {
 
 export interface IProfile {
   id: number;
-  isAdmin: boolean;
   login: string;
   name: string;
   fullName: string;
-  type: ISelectValue;
-  district: ISelectValue;
+  type: number;
+  district: number;
   educationLicense: boolean;
   medicineLicense: boolean;
   innovationGround: boolean;
   supervisor: string;
   responsible: string;
+
+  status: EProposalStatus;
+  cause: string | null;
+  isAdmin: boolean;
 }
 
 export interface IPreloader {
@@ -64,4 +69,9 @@ export interface IValidationResult {
 export interface IValidationObject {
   value: string | number;
   validator: (value: string | number) => IValidationResult;
+}
+
+export interface IBreadcrumbsPath {
+  link: string;
+  alias: string;
 }
