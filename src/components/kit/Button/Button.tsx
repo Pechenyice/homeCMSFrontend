@@ -12,7 +12,7 @@ export const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
         disabled ? styles.styled_disabled : '',
         className ?? ''
       )}
-      onClick={onClick}
+      onClick={!disabled ? onClick : undefined}
       {...rest}
     >
       {children}

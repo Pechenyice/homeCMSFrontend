@@ -14,8 +14,8 @@ export const FakeUser: IProfile = {
   responsible: 'test',
 
   isAdmin: false,
-  status: 1,
-  cause: null,
+  status: 2,
+  cause: 'wow',
 };
 
 export async function checkAuth(ms: number): Promise<IProfile | null> {
@@ -30,4 +30,8 @@ export async function checkUser(
   return new Promise((resolve) =>
     setTimeout(() => resolve(login === 'test' && password === 'test' ? FakeUser : null), ms)
   );
+}
+
+export async function logoutUser(ms: number): Promise<IProfile | null> {
+  return new Promise((resolve) => setTimeout(() => resolve(true ? null : FakeUser), ms));
 }

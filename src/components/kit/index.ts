@@ -1,4 +1,6 @@
 export * from './Input/Input';
+export * from './TextArea/TextArea';
+export * from './Checkbox/Checkbox';
 export * from './H1/H1';
 export * from './H2/H2';
 export * from './H3/H3';

@@ -6,11 +6,12 @@ import { EProposalStatus } from 'types/enums';
 interface Props {
   heading: string;
   status?: EProposalStatus | number;
+  cause?: ReactNode | string;
   action?: ReactNode;
 }
 
 export const PageHeading = (props: Props) => {
-  const { heading, status, action } = props;
+  const { heading, status, cause, action } = props;
 
   return (
     <div className={styles.styled}>
@@ -21,7 +22,7 @@ export const PageHeading = (props: Props) => {
         </div>
         {action && action}
       </div>
-      {status === EProposalStatus.REJECTED && <div></div>}
+      {status === EProposalStatus.REJECTED && <div className={styles.errorText}>{cause}</div>}
     </div>
   );
 };

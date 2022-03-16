@@ -1,11 +1,12 @@
 import styles from 'Profile.module.scss';
 import { PageHeading } from 'components';
-import { Action, Breadcrumbs, Layout } from 'components/kit';
+import { Action, Breadcrumbs, Layout, Text } from 'components/kit';
 import { useAuth } from 'hooks';
 import { EditIcon } from 'assets/icons';
 import { useNavigate } from 'react-router-dom';
+import { ProfilePage } from 'pagesComponents';
 
-const Profile = () => {
+export const Profile = () => {
   const { profile } = useAuth();
   const navigate = useNavigate();
 
@@ -15,6 +16,13 @@ const Profile = () => {
       <PageHeading
         heading="Профиль"
         status={profile?.status}
+        cause={
+          <Text isMedium>
+            Профиль отклонен со следующими ошибками:
+            <br />
+            {profile?.cause}
+          </Text>
+        }
         action={
           <Action
             text="Редактировать"
@@ -23,9 +31,7 @@ const Profile = () => {
           />
         }
       />
-      <div>profile</div>
+      <ProfilePage />
     </Layout>
   );
 };
-
-export default Profile;

@@ -1,5 +1,5 @@
-import { PasswordHiddenIcon, PasswordShownIcon } from 'assets/icons';
-import { ChangeEvent, FocusEvent, InputHTMLAttributes, ReactNode, useState } from 'react';
+import { EyeCrossedIcon, EyeIcon, LockHiddenIcon } from 'assets/icons';
+import { InputHTMLAttributes, ReactNode, useState } from 'react';
 import { IInputError } from 'types/interfaces';
 import { combineClasses } from 'utils';
 import { H3 } from '../H3/H3';
@@ -22,6 +22,8 @@ export const Input = (props: Props & InputHTMLAttributes<HTMLInputElement>) => {
     onBlur,
     onFocus,
     className,
+    readOnly,
+    value,
     ...rest
   } = props;
 
@@ -38,7 +40,9 @@ export const Input = (props: Props & InputHTMLAttributes<HTMLInputElement>) => {
       {heading && <H3 className={styles.heading}>{heading}</H3>}
       <div className={styles.inner}>
         <input
+          readOnly={readOnly}
           type={isHidden ? type : 'text'}
+          value={value}
           name={name}
           placeholder={placeholder}
           onChange={onChange}
@@ -47,6 +51,7 @@ export const Input = (props: Props & InputHTMLAttributes<HTMLInputElement>) => {
           className={combineClasses(
             styles.input,
             error?.exist ? styles.input_error : '',
+            readOnly ? styles.input_readonly : '',
             isPassword ? styles.input_password : ''
           )}
         />
@@ -54,10 +59,15 @@ export const Input = (props: Props & InputHTMLAttributes<HTMLInputElement>) => {
         {isPassword && (
           <div className={styles.icon}>
             {isHidden ? (
-              <PasswordHiddenIcon onClick={() => handleNewMode()} />
+              <EyeIcon onClick={() => handleNewMode()} />
             ) : (
-              <PasswordShownIcon onClick={() => handleNewMode()} />
+              <EyeCrossedIcon onClick={() => handleNewMode()} />
             )}
+          </div>
+        )}
+        {readOnly && (
+          <div className={styles.icon}>
+            <LockHiddenIcon />
           </div>
         )}
       </div>

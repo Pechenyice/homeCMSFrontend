@@ -79,6 +79,26 @@ export const AuthProvider: FC = ({ children }) => {
     }
   };
 
+  const internalLogout = async () => {
+    try {
+      setState({
+        ...state,
+        status: EAuthStatus.PENDING,
+      });
+
+      const profile = await API.logout();
+
+      if (profile) {
+        setState({ ...state, status: EAuthStatus.SUCCESS, profile });
+        addError('Произошла ошибка во время выхода из аккаунта!');
+      } else {
+        setState({ ...state, status: EAuthStatus.ERROR, profile: null });
+      }
+    } catch (e) {
+      addError('Произошла критическая ошибка при выходе из аккаунта. Попробуйте позже.');
+    }
+  };
+
   useEffect(() => {
     internalAuthCheck();
   }, []);
@@ -87,7 +107,9 @@ export const AuthProvider: FC = ({ children }) => {
     internalLogin(data);
   };
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    internalLogout();
+  };
 
   const handleCheckAuth = () => {
     internalAuthCheck();

@@ -47,6 +47,17 @@ input::placeholder {
   color: var(--gray);
 }
 
+textarea {
+  font-family: 'Commissioner Regular';
+  font-style: normal;
+}
+
+textarea::placeholder {
+  font-family: 'Commissioner Regular';
+  font-style: normal;
+  color: var(--gray);
+}
+
 @font-face {
   font-family: 'Commissioner Medium';
   src: url(assets/fonts/Commissioner/static/Commissioner-Medium.ttf) format('truetype');

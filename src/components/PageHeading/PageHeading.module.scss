@@ -14,3 +14,15 @@
   align-items: center;
   gap: 30px;
 }
+
+.errorText {
+  max-width: 660px;
+  margin-top: 40px;
+  padding: 20px;
+  background: var(--error);
+  border-radius: 8px;
+
+  & * {
+    color: white;
+  }
+}

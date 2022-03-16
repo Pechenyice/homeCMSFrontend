@@ -1,6 +1,6 @@
 import { FC, SVGProps } from 'react';
 
-export const PasswordHiddenIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const LockHiddenIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   const { ...rest } = props;
 
   return (
@@ -28,7 +28,7 @@ export const PasswordHiddenIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const PasswordShownIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const LockShownIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   const { ...rest } = props;
 
   return (
