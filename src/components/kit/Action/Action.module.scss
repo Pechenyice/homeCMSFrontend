@@ -1,12 +1,18 @@
 .styled {
+  padding: 18px 30px;
   display: flex;
   align-items: center;
   gap: 10px;
-  opacity: 1;
-  transition: 0.2s;
+  border: 1px solid rgba(65, 79, 235, 0.5);
+  border-radius: 8px;
   cursor: pointer;
 
-  &:hover {
+  & > * {
+    opacity: 1;
+    transition: 0.2s;
+  }
+
+  &:hover > * {
     opacity: 0.6;
     transition: 0.2s;
   }
@@ -15,7 +21,11 @@
     color: var(--blue);
   }
 
-  &_delete * {
-    color: var(--error);
+  &_delete {
+    border: 1px solid rgba(241, 63, 68, 0.5);
+
+    & * {
+      color: var(--error);
+    }
   }
 }

@@ -1,4 +1,13 @@
-import { Action, Checkbox, H3, Input, Text, TextArea } from 'components/kit';
+import {
+  Action,
+  Checkbox,
+  H3,
+  Input,
+  Skeleton,
+  ESkeletonMode,
+  Text,
+  TextArea,
+} from 'components/kit';
 import { useAuth, useDistricts, useOrganizationTypes } from 'hooks';
 import { getValueByIdFromInput } from 'utils';
 import styles from './ProfilePage.module.scss';
@@ -14,7 +23,7 @@ export const ProfilePage = () => {
         <Input value={profile?.name} heading="Краткое наименование организации" readOnly />
         <TextArea value={profile?.fullName} heading="Полное наименование организации" readOnly />
         {districtsLoading ? (
-          <div>loading</div>
+          <Skeleton mode={ESkeletonMode.INPUT} withLoader heading="Тип организации" />
         ) : (
           <Input
             value={getValueByIdFromInput(districts, profile?.type)}
@@ -23,7 +32,7 @@ export const ProfilePage = () => {
           />
         )}
         {organizationTypesLoading ? (
-          <div>loading</div>
+          <Skeleton mode={ESkeletonMode.INPUT} withLoader heading="Район" />
         ) : (
           <Input
             value={getValueByIdFromInput(organizationTypes, profile?.district)}

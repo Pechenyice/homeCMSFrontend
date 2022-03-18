@@ -20,10 +20,10 @@ export const API = {
 
   queries: {
     fetchDistricts(): Promise<ISelectValue[]> {
-      return fakes.fetchDistricts(1000);
+      return fakes.fetchDistricts(30000);
     },
     fetchOrganizationTypes(): Promise<ISelectValue[]> {
-      return fakes.fetchDistricts(1000);
+      return fakes.fetchDistricts(3000);
     },
   },
 };

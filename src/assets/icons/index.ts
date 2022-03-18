@@ -6,3 +6,4 @@ export * from './Edit';
 export * from './Plus';
 export * from './Delete';
 export * from './Eyes';
+export * from './Loaders';
