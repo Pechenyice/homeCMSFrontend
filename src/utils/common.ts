@@ -1,3 +1,5 @@
+import { ISelectValue } from 'types/interfaces';
+
 export const combineClasses = (...classes: string[]) => classes.filter((c) => c).join(' ');
 
 export const simpleUuid = () => {
@@ -8,4 +10,12 @@ export const simpleUuid = () => {
     return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
   });
   return uuid;
+};
+
+export const getValueByIdFromInput = (
+  values: ISelectValue[] | undefined,
+  id: number | undefined
+) => {
+  if (!values || id === undefined) return undefined;
+  return values.filter((value) => value.id === id)[0].value;
 };

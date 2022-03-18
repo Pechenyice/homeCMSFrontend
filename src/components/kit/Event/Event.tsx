@@ -1,5 +1,5 @@
 import { CloseIcon } from 'assets/icons';
-import { HTMLAttributes, useState } from 'react';
+import { HTMLAttributes, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { combineClasses } from 'utils';
 import styles from './Event.module.scss';
@@ -13,6 +13,8 @@ export const Event = (props: HTMLAttributes<HTMLDivElement> & Props) => {
 
   const [showCloser, setShowCloser] = useState(false);
 
+  const nodeRef = useRef(null);
+
   return (
     <div
       className={combineClasses(
@@ -25,8 +27,16 @@ export const Event = (props: HTMLAttributes<HTMLDivElement> & Props) => {
       onMouseLeave={() => setShowCloser(false)}
       {...rest}
     >
-      <CSSTransition in={showCloser} timeout={200} classNames="closer" unmountOnExit>
-        <CloseIcon className={styles.closer} width={12} height={12} />
+      <CSSTransition
+        in={showCloser}
+        nodeRef={nodeRef}
+        timeout={200}
+        classNames="closer"
+        unmountOnExit
+      >
+        <div ref={nodeRef} className={styles.closer}>
+          <CloseIcon width={12} height={12} />
+        </div>
       </CSSTransition>
       {children}
     </div>

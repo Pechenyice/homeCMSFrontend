@@ -1,4 +1,4 @@
-import { IProfile, IUser } from 'types/interfaces';
+import { IProfile, ISelectValue, IUser } from 'types/interfaces';
 import * as fakes from 'utils';
 import { safeFetch } from './wrapper';
 
@@ -16,5 +16,14 @@ export const API = {
   },
   logout(): Promise<IProfile | null> {
     return fakes.logoutUser(1000);
+  },
+
+  queries: {
+    fetchDistricts(): Promise<ISelectValue[]> {
+      return fakes.fetchDistricts(1000);
+    },
+    fetchOrganizationTypes(): Promise<ISelectValue[]> {
+      return fakes.fetchDistricts(1000);
+    },
   },
 };

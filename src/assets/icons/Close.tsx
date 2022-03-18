@@ -15,16 +15,16 @@ export const CloseIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
       <path
         d="M19.25 1.75L1.75 19.25"
         stroke="#8C91B5"
-        stroke-width="2.91667"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.91667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M1.75 1.75L19.25 19.25"
         stroke="#8C91B5"
-        stroke-width="2.91667"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.91667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

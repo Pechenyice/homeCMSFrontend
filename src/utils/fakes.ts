@@ -35,3 +35,29 @@ export async function checkUser(
 export async function logoutUser(ms: number): Promise<IProfile | null> {
   return new Promise((resolve) => setTimeout(() => resolve(true ? null : FakeUser), ms));
 }
+
+export async function fetchDistricts(ms: number): Promise<ISelectValue[]> {
+  return new Promise((resolve) =>
+    setTimeout(
+      () =>
+        resolve([
+          { id: 0, value: 'test' },
+          { id: 1, value: 'new test' },
+        ]),
+      ms
+    )
+  );
+}
+
+export async function fetchOrganizationTypes(ms: number): Promise<ISelectValue[]> {
+  return new Promise((resolve) =>
+    setTimeout(
+      () =>
+        resolve([
+          { id: 0, value: 'test' },
+          { id: 1, value: 'new test' },
+        ]),
+      ms
+    )
+  );
+}
