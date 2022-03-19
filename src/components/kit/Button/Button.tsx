@@ -1,9 +1,14 @@
 import { ButtonHTMLAttributes } from 'react';
 import { combineClasses } from 'utils';
+import { ELoaderPalette, Loader } from '../Loader/Loader';
 import styles from './Button.module.scss';
 
-export const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const { disabled, className, children, onClick, ...rest } = props;
+type Props = {
+  isLoading?: boolean;
+};
+
+export const Button = (props: ButtonHTMLAttributes<HTMLButtonElement> & Props) => {
+  const { isLoading, disabled, className, children, onClick, ...rest } = props;
 
   return (
     <button
@@ -12,10 +17,10 @@ export const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
         disabled ? styles.styled_disabled : '',
         className ?? ''
       )}
-      onClick={!disabled ? onClick : undefined}
+      onClick={!disabled && !isLoading ? onClick : undefined}
       {...rest}
     >
-      {children}
+      {isLoading ? <Loader palette={ELoaderPalette.LIGHT} /> : children}
     </button>
   );
 };

@@ -63,3 +63,7 @@ export async function fetchOrganizationTypes(ms: number): Promise<ISelectValue[]
     )
   );
 }
+
+export async function updateUser(ms: number): Promise<boolean> {
+  return new Promise((resolve, reject) => setTimeout(() => resolve(true), ms));
+}

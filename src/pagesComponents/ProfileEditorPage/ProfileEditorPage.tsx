@@ -1,3 +1,4 @@
+import { API } from 'api';
 import {
   Action,
   Checkbox,
@@ -8,16 +9,20 @@ import {
   Text,
   TextArea,
   Select,
+  Button,
+  Modal,
 } from 'components/kit';
 import { useAuth, useDistricts, useErrors, useOrganizationTypes } from 'hooks';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { IInput, IProfileState, IInputsState } from 'types/interfaces';
+import { useNavigate } from 'react-router-dom';
+import { IProfileState, IInputsState } from 'types/interfaces';
 import { registerInput, textInputValidator } from 'utils';
 import styles from './ProfileEditorPage.module.scss';
 
 export const ProfileEditorPage = () => {
-  const { profile, handleLogout } = useAuth();
+  const { profile } = useAuth();
   const { addError } = useErrors();
+  const navigate = useNavigate();
 
   const { company } = useMemo(() => profile ?? { company: null }, [profile]);
 
@@ -43,6 +48,12 @@ export const ProfileEditorPage = () => {
       );
   }, [memoizedDistrictsError, memoizedOrganizationTypesError]);
 
+  const [modalState, setModalState] = useState(false);
+
+  const toggleModal = () => {
+    setModalState(!modalState);
+  };
+
   const [state, setState] = useState<IProfileState>({
     name: registerInput(company?.name ?? '', textInputValidator),
     fullName: registerInput(company?.fullName ?? '', textInputValidator),
@@ -54,6 +65,13 @@ export const ProfileEditorPage = () => {
     medicineLicense: company?.medicineLicense ?? false,
     innovationGround: company?.innovationGround ?? false,
   });
+
+  const handleProfileUpdate = async () => {
+    toggleModal();
+    const response = await API.profile.update(state);
+    console.log(response);
+    navigate('/profile');
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const [key, value] = [e.target.name, e.target.value];
@@ -160,8 +178,23 @@ export const ProfileEditorPage = () => {
         </div>
       </div>
       <div className={styles.footer}>
-        <Action isDeleteMode text="Выйти из аккаунта" onClick={handleLogout} />
+        <Button
+          onClick={toggleModal}
+          className={styles.footer__button}
+          isLoading={districtsLoading || organizationTypesLoading}
+        >
+          <Text>Отправить на рассмотрение</Text>
+        </Button>
+        <Action text="Отменить изменения" onClick={() => navigate('/profile')} />
       </div>
+      <Modal
+        isOpen={modalState}
+        text="Вы точно хотите отправить информацию в профиле на рассмотрение? "
+        submitText="Отправить"
+        cancelText="Отменить"
+        onSubmit={handleProfileUpdate}
+        onCancel={toggleModal}
+      />
     </div>
   );
 };

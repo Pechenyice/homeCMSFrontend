@@ -37,7 +37,7 @@ export const AuthProvider: FC = ({ children }) => {
         status: EAuthStatus.PENDING,
       });
 
-      const profile = await API.checkAuth();
+      const profile = await API.profile.checkAuth();
 
       if (profile) {
         setState((prevState) => ({
@@ -66,7 +66,7 @@ export const AuthProvider: FC = ({ children }) => {
         status: EAuthStatus.PENDING,
       });
 
-      const profile = await API.login(data);
+      const profile = await API.profile.login(data);
 
       if (profile) {
         setState({ ...state, status: EAuthStatus.SUCCESS, profile });
@@ -86,7 +86,7 @@ export const AuthProvider: FC = ({ children }) => {
         status: EAuthStatus.PENDING,
       });
 
-      const profile = await API.logout();
+      const profile = await API.profile.logout();
 
       if (profile) {
         setState({ ...state, status: EAuthStatus.SUCCESS, profile });

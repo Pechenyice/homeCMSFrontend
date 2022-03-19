@@ -16,3 +16,4 @@ export * from './Action/Action';
 export * from './Skeleton/Skeleton';
 export * from './Loader/Loader';
 export * from './Select/Select';
+export * from './Modal/Modal';
