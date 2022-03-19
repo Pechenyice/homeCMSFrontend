@@ -55,10 +55,6 @@ export const ProfileEditorPage = () => {
     innovationGround: company?.innovationGround ?? false,
   });
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const [key, value] = [e.target.name, e.target.value];
 
