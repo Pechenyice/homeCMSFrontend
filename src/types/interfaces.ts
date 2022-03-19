@@ -13,6 +13,11 @@ export interface IUser {
 export interface IProfile {
   id: number;
   login: string;
+  isAdmin: boolean;
+  company: ICompany | null;
+}
+
+export interface ICompany {
   name: string;
   fullName: string;
   type: number;
@@ -22,10 +27,8 @@ export interface IProfile {
   innovationGround: boolean;
   supervisor: string;
   responsible: string;
-
   status: EProposalStatus;
   cause: string | null;
-  isAdmin: boolean;
 }
 
 export interface IPreloader {
@@ -48,6 +51,18 @@ export interface IErrorsList {
 
 export interface IInputsState {
   [key: string]: IInput;
+}
+
+export interface IProfileState {
+  name: IInput;
+  fullName: IInput;
+  type: number;
+  district: number;
+  supervisor: IInput;
+  responsible: IInput;
+  educationLicense: boolean;
+  medicineLicense: boolean;
+  innovationGround: boolean;
 }
 
 export interface IInput {

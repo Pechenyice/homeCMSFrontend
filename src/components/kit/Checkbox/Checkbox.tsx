@@ -6,6 +6,7 @@ import styles from './Checkbox.module.scss';
 interface Props {
   heading?: string | ReactNode;
   label?: string | ReactNode;
+  onToggle?: () => void;
 }
 
 export const Checkbox = (props: Props & InputHTMLAttributes<HTMLInputElement>) => {
@@ -17,6 +18,7 @@ export const Checkbox = (props: Props & InputHTMLAttributes<HTMLInputElement>) =
     onChange,
     onBlur,
     onFocus,
+    onToggle,
     className,
     readOnly,
     value,
@@ -43,7 +45,9 @@ export const Checkbox = (props: Props & InputHTMLAttributes<HTMLInputElement>) =
           onFocus={onFocus}
           className={styles.input}
         />
-        <label htmlFor={name}>{label}</label>
+        <label onClick={onToggle} htmlFor={name}>
+          {label}
+        </label>
       </div>
     </div>
   );

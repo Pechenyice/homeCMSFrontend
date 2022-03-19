@@ -15,12 +15,12 @@ export const Profile = () => {
       <Breadcrumbs paths={[{ link: '/profile', alias: 'Профиль' }]} />
       <PageHeading
         heading="Профиль"
-        status={profile?.status}
+        status={profile?.company?.status}
         cause={
           <Text isMedium>
             Профиль отклонен со следующими ошибками:
             <br />
-            {profile?.cause}
+            {profile?.company?.cause}
           </Text>
         }
         action={

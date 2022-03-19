@@ -1,4 +1,4 @@
-import { ISelectValue } from 'types/interfaces';
+import { IInput, ISelectValue } from 'types/interfaces';
 
 export const combineClasses = (...classes: string[]) => classes.filter((c) => c).join(' ');
 
@@ -12,7 +12,7 @@ export const simpleUuid = () => {
   return uuid;
 };
 
-export const getValueByIdFromInput = (
+export const getValueByIdFromSelect = (
   values: ISelectValue[] | undefined,
   id: number | undefined
 ) => {

@@ -2,7 +2,7 @@ import { Button, H1, Input, Text } from 'components/kit';
 import { useAuth, useErrors } from 'hooks';
 import { ChangeEvent, useState } from 'react';
 import { IInputsState } from 'types/interfaces';
-import { textInputValidator, validateAll } from 'utils';
+import { registerInput, textInputValidator, validateAll } from 'utils';
 import styles from './Auth.module.scss';
 
 export const Auth = () => {
@@ -10,22 +10,8 @@ export const Auth = () => {
   const { addError } = useErrors();
 
   const [inputs, setInputs] = useState<IInputsState>({
-    login: {
-      value: '',
-      validator: textInputValidator,
-      error: {
-        exist: false,
-        text: '',
-      },
-    },
-    password: {
-      value: '',
-      validator: textInputValidator,
-      error: {
-        exist: false,
-        text: '',
-      },
-    },
+    login: registerInput('', textInputValidator),
+    password: registerInput('', textInputValidator),
   });
 
   const formIsValid = Object.values(inputs).every((val) => val.value && !val.error.exist);

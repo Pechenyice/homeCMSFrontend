@@ -1,21 +1,23 @@
+import { API } from 'api';
 import { IProfile, ISelectValue, IUser } from 'types/interfaces';
 
 export const FakeUser: IProfile = {
   id: 1,
   login: 'test',
-  name: 'test',
-  fullName: 'test',
-  type: 0,
-  district: 0,
-  educationLicense: true,
-  medicineLicense: false,
-  innovationGround: true,
-  supervisor: 'test',
-  responsible: 'test',
-
   isAdmin: false,
-  status: 2,
-  cause: 'wow',
+  company: {
+    name: 'test',
+    fullName: 'test',
+    type: 1,
+    district: 0,
+    educationLicense: true,
+    medicineLicense: false,
+    innovationGround: true,
+    supervisor: 'test',
+    responsible: 'test',
+    status: 2,
+    cause: 'wow',
+  },
 };
 
 export async function checkAuth(ms: number): Promise<IProfile | null> {
@@ -50,7 +52,7 @@ export async function fetchDistricts(ms: number): Promise<ISelectValue[]> {
 }
 
 export async function fetchOrganizationTypes(ms: number): Promise<ISelectValue[]> {
-  return new Promise((resolve) =>
+  return new Promise((resolve, reject) =>
     setTimeout(
       () =>
         resolve([

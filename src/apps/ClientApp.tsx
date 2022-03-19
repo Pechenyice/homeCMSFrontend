@@ -3,14 +3,14 @@ import { CommonBaseRoutesInfo, Main } from 'components';
 import NotFound from 'components/404/404';
 import { useAuth, useInfos } from 'hooks';
 import { useEffect } from 'react';
-import { Profile } from 'pages';
+import { Profile, ProfileEditor } from 'pages';
 
 const ClientApp = () => {
   const { addInfo } = useInfos();
   const { profile } = useAuth();
 
   useEffect(() => {
-    addInfo(`Добро пожаловать в систему Homekid, ${profile?.name}`);
+    addInfo(`Добро пожаловать в систему Homekid, ${profile?.company?.name}`);
   }, []);
 
   return (
@@ -19,9 +19,11 @@ const ClientApp = () => {
         <Route path="*" element={<NotFound />} />
 
         <Route path="/" element={<CommonBaseRoutesInfo />}>
-          <Route path="/" element={<Main />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<div>test</div>} />
+          <Route index element={<Main />} />
+          <Route path="profile">
+            <Route index element={<Profile />} />
+            <Route path="edit" element={<ProfileEditor />} />
+          </Route>
         </Route>
       </Routes>
     </Router>
