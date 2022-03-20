@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/homeCMSFrontend/static/css/main.ff6623ad.css",
-    "main.js": "/homeCMSFrontend/static/js/main.f9a23be3.js",
+    "main.js": "/homeCMSFrontend/static/js/main.26d6be31.js",
     "static/css/784.4df83917.chunk.css": "/homeCMSFrontend/static/css/784.4df83917.chunk.css",
     "static/js/784.b7a23062.chunk.js": "/homeCMSFrontend/static/js/784.b7a23062.chunk.js",
     "static/css/956.4df83917.chunk.css": "/homeCMSFrontend/static/css/956.4df83917.chunk.css",
@@ -11,7 +11,7 @@
     "static/media/Commissioner-Regular.ttf": "/homeCMSFrontend/static/media/Commissioner-Regular.cab7a5f8d16eb6c6f1d1.ttf",
     "index.html": "/homeCMSFrontend/index.html",
     "main.ff6623ad.css.map": "/homeCMSFrontend/static/css/main.ff6623ad.css.map",
-    "main.f9a23be3.js.map": "/homeCMSFrontend/static/js/main.f9a23be3.js.map",
+    "main.26d6be31.js.map": "/homeCMSFrontend/static/js/main.26d6be31.js.map",
     "784.4df83917.chunk.css.map": "/homeCMSFrontend/static/css/784.4df83917.chunk.css.map",
     "784.b7a23062.chunk.js.map": "/homeCMSFrontend/static/js/784.b7a23062.chunk.js.map",
     "956.4df83917.chunk.css.map": "/homeCMSFrontend/static/css/956.4df83917.chunk.css.map",
@@ -20,6 +20,6 @@
   },
   "entrypoints": [
     "static/css/main.ff6623ad.css",
-    "static/js/main.f9a23be3.js"
+    "static/js/main.26d6be31.js"
   ]
 }
