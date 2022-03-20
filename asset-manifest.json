@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/homeCMS/static/css/main.f49b2d85.css",
-    "main.js": "/homeCMS/static/js/main.21098385.js",
-    "static/css/784.4df83917.chunk.css": "/homeCMS/static/css/784.4df83917.chunk.css",
-    "static/js/784.b7a23062.chunk.js": "/homeCMS/static/js/784.b7a23062.chunk.js",
-    "static/css/956.4df83917.chunk.css": "/homeCMS/static/css/956.4df83917.chunk.css",
-    "static/js/956.d8e19ce9.chunk.js": "/homeCMS/static/js/956.d8e19ce9.chunk.js",
-    "static/js/811.1dfaf025.chunk.js": "/homeCMS/static/js/811.1dfaf025.chunk.js",
-    "static/media/Commissioner-Medium.ttf": "/homeCMS/static/media/Commissioner-Medium.d6c4b7155f7a0700f44b.ttf",
-    "static/media/Commissioner-Regular.ttf": "/homeCMS/static/media/Commissioner-Regular.cab7a5f8d16eb6c6f1d1.ttf",
-    "index.html": "/homeCMS/index.html",
-    "main.f49b2d85.css.map": "/homeCMS/static/css/main.f49b2d85.css.map",
-    "main.21098385.js.map": "/homeCMS/static/js/main.21098385.js.map",
-    "784.4df83917.chunk.css.map": "/homeCMS/static/css/784.4df83917.chunk.css.map",
-    "784.b7a23062.chunk.js.map": "/homeCMS/static/js/784.b7a23062.chunk.js.map",
-    "956.4df83917.chunk.css.map": "/homeCMS/static/css/956.4df83917.chunk.css.map",
-    "956.d8e19ce9.chunk.js.map": "/homeCMS/static/js/956.d8e19ce9.chunk.js.map",
-    "811.1dfaf025.chunk.js.map": "/homeCMS/static/js/811.1dfaf025.chunk.js.map"
+    "main.css": "/homeCMSFrontend/static/css/main.ff6623ad.css",
+    "main.js": "/homeCMSFrontend/static/js/main.f9a23be3.js",
+    "static/css/784.4df83917.chunk.css": "/homeCMSFrontend/static/css/784.4df83917.chunk.css",
+    "static/js/784.b7a23062.chunk.js": "/homeCMSFrontend/static/js/784.b7a23062.chunk.js",
+    "static/css/956.4df83917.chunk.css": "/homeCMSFrontend/static/css/956.4df83917.chunk.css",
+    "static/js/956.d8e19ce9.chunk.js": "/homeCMSFrontend/static/js/956.d8e19ce9.chunk.js",
+    "static/js/811.1dfaf025.chunk.js": "/homeCMSFrontend/static/js/811.1dfaf025.chunk.js",
+    "static/media/Commissioner-Medium.ttf": "/homeCMSFrontend/static/media/Commissioner-Medium.d6c4b7155f7a0700f44b.ttf",
+    "static/media/Commissioner-Regular.ttf": "/homeCMSFrontend/static/media/Commissioner-Regular.cab7a5f8d16eb6c6f1d1.ttf",
+    "index.html": "/homeCMSFrontend/index.html",
+    "main.ff6623ad.css.map": "/homeCMSFrontend/static/css/main.ff6623ad.css.map",
+    "main.f9a23be3.js.map": "/homeCMSFrontend/static/js/main.f9a23be3.js.map",
+    "784.4df83917.chunk.css.map": "/homeCMSFrontend/static/css/784.4df83917.chunk.css.map",
+    "784.b7a23062.chunk.js.map": "/homeCMSFrontend/static/js/784.b7a23062.chunk.js.map",
+    "956.4df83917.chunk.css.map": "/homeCMSFrontend/static/css/956.4df83917.chunk.css.map",
+    "956.d8e19ce9.chunk.js.map": "/homeCMSFrontend/static/js/956.d8e19ce9.chunk.js.map",
+    "811.1dfaf025.chunk.js.map": "/homeCMSFrontend/static/js/811.1dfaf025.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f49b2d85.css",
-    "static/js/main.21098385.js"
+    "static/css/main.ff6623ad.css",
+    "static/js/main.f9a23be3.js"
   ]
 }
