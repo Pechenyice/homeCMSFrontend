@@ -87,10 +87,10 @@ export async function fetchDistricts(ms: number): Promise<IQueriesDistrictsRespo
 export async function fetchOrganizationTypes(
   ms: number
 ): Promise<IQueriesOrganizationTypesResponse> {
-  return new Promise((resolve, r) =>
+  return new Promise((resolve) =>
     setTimeout(
       () =>
-        r(
+        resolve(
           true
             ? {
                 errors: null,
