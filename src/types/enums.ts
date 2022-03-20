@@ -6,6 +6,6 @@ export enum EAuthStatus {
 
 export enum EProposalStatus {
   'ACCEPTED' = 0,
-  'CONFIRMTAION' = 1,
+  'CONFIRMATION' = 1,
   'REJECTED' = 2,
 }

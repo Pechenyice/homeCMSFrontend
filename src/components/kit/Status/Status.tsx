@@ -16,7 +16,7 @@ export const Status = (props: HTMLAttributes<HTMLDivElement> & Props) => {
       class: styles.styled_accepted,
       content: 'Подтверждено',
     },
-    [EProposalStatus.CONFIRMTAION]: {
+    [EProposalStatus.CONFIRMATION]: {
       class: styles.styled_confirmation,
       content: 'На рассмотрении',
     },

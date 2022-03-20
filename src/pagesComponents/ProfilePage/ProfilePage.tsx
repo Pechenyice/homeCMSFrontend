@@ -17,9 +17,15 @@ export const ProfilePage = () => {
   const { profile, handleLogout } = useAuth();
   const { addError } = useErrors();
 
-  const { data: districts, isLoading: districtsLoading, isError: districtsError } = useDistricts();
   const {
-    data: organizationTypes,
+    apiData: districts,
+    apiErrors: districtsErrors,
+    isLoading: districtsLoading,
+    isError: districtsError,
+  } = useDistricts();
+  const {
+    apiData: organizationTypes,
+    apiErrors: organizationTypesErrors,
     isLoading: organizationTypesLoading,
     isError: organizationTypesError,
   } = useOrganizationTypes();
@@ -33,12 +39,12 @@ export const ProfilePage = () => {
   );
 
   useEffect(() => {
-    if (memoizedDistrictsError)
-      addError('Произошла ошибка во время загрузки районов, пожалуйста, перезагрузите страницу!');
-    if (memoizedOrganizationTypesError)
-      addError(
-        'Произошла ошибка во время загрузки типов организации, пожалуйста, перезагрузите страницу!'
-      );
+    if (memoizedDistrictsError) {
+      districtsErrors?.forEach((error) => addError(error));
+    }
+    if (memoizedOrganizationTypesError) {
+      organizationTypesErrors?.forEach((error) => addError(error));
+    }
   }, [memoizedDistrictsError, memoizedOrganizationTypesError]);
 
   return (
@@ -48,18 +54,22 @@ export const ProfilePage = () => {
         <TextArea value={company?.fullName} heading="Полное наименование организации" readOnly />
         {organizationTypesLoading ? (
           <Skeleton mode={ESkeletonMode.INPUT} withLoader heading="Тип организации" />
+        ) : organizationTypesError ? (
+          <Input value={''} heading="Тип организации" readOnly />
         ) : (
           <Input
-            value={getValueByIdFromSelect(organizationTypes, company?.type)}
+            value={getValueByIdFromSelect(organizationTypes!, company?.type)}
             heading="Тип организации"
             readOnly
           />
         )}
         {districtsLoading ? (
           <Skeleton mode={ESkeletonMode.INPUT} withLoader heading="Район" />
+        ) : districtsError ? (
+          <Input value={''} heading="Район" readOnly />
         ) : (
           <Input
-            value={getValueByIdFromSelect(districts, company?.district)}
+            value={getValueByIdFromSelect(districts!, company?.district)}
             heading="Район"
             readOnly
           />

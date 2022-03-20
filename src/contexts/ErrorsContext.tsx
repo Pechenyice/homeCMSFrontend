@@ -1,10 +1,12 @@
 import { FC, useState } from 'react';
 import { IEvent } from 'types/interfaces';
 import { createContext } from 'react';
+import { ErrorsList } from 'components';
 
 export interface IErrorsContextValues {
   addError: (text: string) => void;
   removeError: (id: number) => void;
+  removeAllErrors: () => void;
   errors: IEvent[];
 }
 
@@ -22,14 +24,20 @@ export const ErrorsProvider: FC = ({ children }) => {
     setErrors(errors.filter((e) => e.id !== id));
   };
 
+  const removeAllErrors = () => {
+    setErrors([]);
+  };
+
   return (
     <ErrorsContext.Provider
       value={{
         errors,
         addError,
         removeError,
+        removeAllErrors,
       }}
     >
+      <ErrorsList />
       {children}
     </ErrorsContext.Provider>
   );

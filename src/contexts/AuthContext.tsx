@@ -1,19 +1,18 @@
 import { API } from 'api';
 import UnauthorizedApp from 'apps/UnauthorizedApp/UnauthorizedApp';
-import { Auth, ErrorsList, InfosList, Preloader } from 'components';
-import { useErrors } from 'hooks';
+import { ErrorsList, InfosList, Preloader } from 'components';
+import { useErrors, useInfos } from 'hooks';
 import { createContext, FC, useEffect, useState } from 'react';
 import { EAuthStatus } from 'types/enums';
-import { IProfile, IUser } from 'types/interfaces';
-import { ErrorsProvider } from './ErrorsContext';
-import { InfosProvider } from './InfosContext';
+import { ICompany, IProfile, IUser } from 'types/interfaces';
 
 export interface IAuthContextValues {
   handleLogin: (data: IUser) => void;
   handleLogout: () => void;
   handleCheckAuth: () => void;
+  updateProfile: (company: ICompany) => void;
   status: EAuthStatus;
-  profile?: IProfile | null;
+  profile: IProfile | null;
   initialCheckIsPending: boolean;
 }
 
@@ -28,7 +27,12 @@ export const AuthProvider: FC = ({ children }) => {
     initialCheckIsPending: true,
   });
 
-  const { addError } = useErrors();
+  const { addError, removeAllErrors } = useErrors();
+  const { removeAllInfos } = useInfos();
+
+  const updateProfile = (company: ICompany) => {
+    setState({ ...state, profile: { ...state.profile!, company } });
+  };
 
   const internalAuthCheck = async () => {
     try {
@@ -37,23 +41,27 @@ export const AuthProvider: FC = ({ children }) => {
         status: EAuthStatus.PENDING,
       });
 
-      const profile = await API.profile.checkAuth();
+      const { errors, data } = await API.profile.checkAuth();
 
-      if (profile) {
-        setState((prevState) => ({
-          ...state,
-          status: EAuthStatus.SUCCESS,
-          profile,
-          initialCheckIsPending: false,
-        }));
-      } else {
+      if (errors) {
+        errors.forEach((error) => addError(error));
+
         setState((prevState) => ({
           ...state,
           status: EAuthStatus.ERROR,
           profile: null,
           initialCheckIsPending: false,
         }));
+
+        return;
       }
+
+      setState((prevState) => ({
+        ...state,
+        status: EAuthStatus.SUCCESS,
+        profile: data,
+        initialCheckIsPending: false,
+      }));
     } catch (e) {
       addError('Произошла ошибка при проверке подлинности пользователя. Попробуйте позже.');
     }
@@ -66,14 +74,22 @@ export const AuthProvider: FC = ({ children }) => {
         status: EAuthStatus.PENDING,
       });
 
-      const profile = await API.profile.login(data);
+      const response = await API.profile.login(data);
 
-      if (profile) {
-        setState({ ...state, status: EAuthStatus.SUCCESS, profile });
-      } else {
-        setState({ ...state, status: EAuthStatus.ERROR, profile: null });
-        addError('Такого пользователя не существует!');
+      if (response.errors) {
+        response.errors.forEach((error) => addError(error));
+
+        setState((prevState) => ({
+          ...state,
+          status: EAuthStatus.ERROR,
+          profile: null,
+          initialCheckIsPending: false,
+        }));
+
+        return;
       }
+
+      setState({ ...state, status: EAuthStatus.SUCCESS, profile: response.data });
     } catch (e) {
       addError('Произошла ошибка при входе в аккаунт. Попробуйте позже.');
     }
@@ -86,14 +102,23 @@ export const AuthProvider: FC = ({ children }) => {
         status: EAuthStatus.PENDING,
       });
 
-      const profile = await API.profile.logout();
+      removeAllErrors();
+      removeAllInfos();
 
-      if (profile) {
-        setState({ ...state, status: EAuthStatus.SUCCESS, profile });
-        addError('Произошла ошибка во время выхода из аккаунта!');
-      } else {
-        setState({ ...state, status: EAuthStatus.ERROR, profile: null });
+      const { errors } = await API.profile.logout();
+
+      if (errors) {
+        errors.forEach((error) => addError(error));
+
+        setState((prevState) => ({
+          ...state,
+          status: EAuthStatus.SUCCESS,
+        }));
+
+        return;
       }
+
+      setState({ ...state, status: EAuthStatus.ERROR, profile: null });
     } catch (e) {
       addError('Произошла критическая ошибка при выходе из аккаунта. Попробуйте позже.');
     }
@@ -122,15 +147,13 @@ export const AuthProvider: FC = ({ children }) => {
         handleLogin,
         handleLogout,
         handleCheckAuth,
+        updateProfile,
       }}
     >
       {state.status === EAuthStatus.PENDING ? (
         <Preloader />
       ) : state.status === EAuthStatus.ERROR ? (
         <>
-          <ErrorsList />
-          <InfosList />
-
           <UnauthorizedApp />
         </>
       ) : (

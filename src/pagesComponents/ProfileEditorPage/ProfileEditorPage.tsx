@@ -15,20 +15,27 @@ import {
 import { useAuth, useDistricts, useErrors, useOrganizationTypes } from 'hooks';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { EProposalStatus } from 'types/enums';
 import { IProfileState, IInputsState } from 'types/interfaces';
-import { registerInput, textInputValidator } from 'utils';
+import { registerInput, textInputValidator, validateAll } from 'utils';
 import styles from './ProfileEditorPage.module.scss';
 
 export const ProfileEditorPage = () => {
-  const { profile } = useAuth();
+  const { profile, updateProfile } = useAuth();
   const { addError } = useErrors();
   const navigate = useNavigate();
 
   const { company } = useMemo(() => profile ?? { company: null }, [profile]);
 
-  const { data: districts, isLoading: districtsLoading, isError: districtsError } = useDistricts();
   const {
-    data: organizationTypes,
+    apiData: districts,
+    apiErrors: districtsErrors,
+    isLoading: districtsLoading,
+    isError: districtsError,
+  } = useDistricts();
+  const {
+    apiData: organizationTypes,
+    apiErrors: organizationTypesErrors,
     isLoading: organizationTypesLoading,
     isError: organizationTypesError,
   } = useOrganizationTypes();
@@ -40,13 +47,15 @@ export const ProfileEditorPage = () => {
   );
 
   useEffect(() => {
-    if (memoizedDistrictsError)
-      addError('Произошла ошибка во время загрузки районов, пожалуйста, перезагрузите страницу!');
-    if (memoizedOrganizationTypesError)
-      addError(
-        'Произошла ошибка во время загрузки типов организации, пожалуйста, перезагрузите страницу!'
-      );
+    if (memoizedDistrictsError) {
+      districtsErrors?.forEach((error) => addError(error));
+    }
+    if (memoizedOrganizationTypesError) {
+      organizationTypesErrors?.forEach((error) => addError(error));
+    }
   }, [memoizedDistrictsError, memoizedOrganizationTypesError]);
+
+  const [fetchInProgress, setFetchInProgress] = useState(false);
 
   const [modalState, setModalState] = useState(false);
 
@@ -68,9 +77,63 @@ export const ProfileEditorPage = () => {
 
   const handleProfileUpdate = async () => {
     toggleModal();
-    const response = await API.profile.update(state);
-    console.log(response);
-    navigate('/profile');
+
+    const needValidation = {
+      name: state.name,
+      fullName: state.fullName,
+      supervisor: state.supervisor,
+      responsible: state.responsible,
+    };
+
+    const validationSuccess = validateAll(
+      Object.values(needValidation).map((val) => ({
+        value: val.value,
+        validator: val.validator,
+      }))
+    );
+
+    if (!validationSuccess) {
+      addError('Проверьте поля на правильность');
+      return;
+    }
+
+    setFetchInProgress(true);
+
+    try {
+      const { errors, data } = await API.profile.update(state);
+
+      if (errors) {
+        errors.forEach((error) => addError(error));
+
+        setFetchInProgress(false);
+
+        return;
+      }
+
+      if (data) {
+        updateProfile({
+          name: state.name.value,
+          fullName: state.fullName.value,
+          type: state?.type!,
+          district: state?.district!,
+          supervisor: state.supervisor.value,
+          responsible: state.responsible.value,
+          educationLicense: state?.educationLicense!,
+          medicineLicense: state?.medicineLicense!,
+          innovationGround: state?.innovationGround!,
+          status: EProposalStatus.CONFIRMATION,
+          cause: null,
+        });
+
+        navigate('/profile');
+      } else {
+        setFetchInProgress(false);
+        addError('Не удалось обновить данные профиля!');
+      }
+    } catch (e) {
+      setFetchInProgress(false);
+      addError('Произошла критическая ошибка при обновлении данных профиля!');
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -112,12 +175,14 @@ export const ProfileEditorPage = () => {
           name="name"
           value={state.name.value}
           onChange={handleChange}
+          error={state.name.error}
           heading="Краткое наименование организации"
         />
         <TextArea
           name="fullName"
           value={state.fullName.value}
           onChange={handleChange}
+          error={state.fullName.error}
           heading="Полное наименование организации"
         />
         {organizationTypesLoading ? (
@@ -150,12 +215,14 @@ export const ProfileEditorPage = () => {
           name="supervisor"
           value={state.supervisor.value}
           onChange={handleChange}
+          error={state.supervisor.error}
           heading="Руководитель организации"
         />
         <Input
           name="responsible"
           value={state.responsible.value}
           onChange={handleChange}
+          error={state.responsible.error}
           heading="Ответственный за предоставление информации"
         />
         <div className={styles.group}>
@@ -181,7 +248,8 @@ export const ProfileEditorPage = () => {
         <Button
           onClick={toggleModal}
           className={styles.footer__button}
-          isLoading={districtsLoading || organizationTypesLoading}
+          isLoading={districtsLoading || organizationTypesLoading || fetchInProgress}
+          disabled={districtsError || organizationTypesError}
         >
           <Text>Отправить на рассмотрение</Text>
         </Button>

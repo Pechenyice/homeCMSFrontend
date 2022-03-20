@@ -1,5 +1,13 @@
-import { API } from 'api';
-import { IProfile, ISelectValue, IUser } from 'types/interfaces';
+import {
+  API,
+  IProfileCheckAuthResponse,
+  IProfileLoginResponse,
+  IProfileLogoutResponse,
+  IProfileUpdateResponse,
+  IQueriesDistrictsResponse,
+  IQueriesOrganizationTypesResponse,
+} from 'api';
+import { IProfile, IUser } from 'types/interfaces';
 
 export const FakeUser: IProfile = {
   id: 1,
@@ -20,50 +28,94 @@ export const FakeUser: IProfile = {
   },
 };
 
-export async function checkAuth(ms: number): Promise<IProfile | null> {
-  return new Promise((resolve) => setTimeout(() => resolve(null), ms));
+export async function checkAuth(ms: number): Promise<IProfileCheckAuthResponse> {
+  return new Promise((resolve) => setTimeout(() => resolve({ errors: [], data: null }), ms));
 }
 
 export async function checkUser(
   login: IUser['login'],
   password: IUser['password'],
   ms: number
-): Promise<IProfile | null> {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve(login === 'test' && password === 'test' ? FakeUser : null), ms)
-  );
-}
-
-export async function logoutUser(ms: number): Promise<IProfile | null> {
-  return new Promise((resolve) => setTimeout(() => resolve(true ? null : FakeUser), ms));
-}
-
-export async function fetchDistricts(ms: number): Promise<ISelectValue[]> {
+): Promise<IProfileLoginResponse> {
   return new Promise((resolve) =>
     setTimeout(
       () =>
-        resolve([
-          { id: 0, value: 'test' },
-          { id: 1, value: 'new test' },
-        ]),
+        resolve(
+          login === 'test' && password === 'test'
+            ? { errors: null, data: FakeUser }
+            : { errors: ['Такого пользователя не существует!'], data: null }
+        ),
       ms
     )
   );
 }
 
-export async function fetchOrganizationTypes(ms: number): Promise<ISelectValue[]> {
-  return new Promise((resolve, reject) =>
+export async function logoutUser(ms: number): Promise<IProfileLogoutResponse> {
+  return new Promise((resolve) =>
     setTimeout(
       () =>
-        resolve([
-          { id: 0, value: 'test' },
-          { id: 1, value: 'new test' },
-        ]),
+        resolve(
+          true
+            ? { errors: null, data: true }
+            : { errors: ['Сейчас нельзя выйти из аккаунта!'], data: null }
+        ),
       ms
     )
   );
 }
 
-export async function updateUser(ms: number): Promise<boolean> {
-  return new Promise((resolve, reject) => setTimeout(() => resolve(true), ms));
+export async function fetchDistricts(ms: number): Promise<IQueriesDistrictsResponse> {
+  return new Promise((resolve) =>
+    setTimeout(
+      () =>
+        resolve(
+          true
+            ? {
+                errors: null,
+                data: [
+                  { id: 0, value: 'test' },
+                  { id: 1, value: 'new test' },
+                ],
+              }
+            : { errors: ['Ошибка во время загрузки районов!'], data: null }
+        ),
+      ms
+    )
+  );
+}
+
+export async function fetchOrganizationTypes(
+  ms: number
+): Promise<IQueriesOrganizationTypesResponse> {
+  return new Promise((resolve, r) =>
+    setTimeout(
+      () =>
+        r(
+          true
+            ? {
+                errors: null,
+                data: [
+                  { id: 0, value: 'test' },
+                  { id: 1, value: 'new test' },
+                ],
+              }
+            : { errors: ['Ошибка во время загрузки типов организаций!'], data: null }
+        ),
+      ms
+    )
+  );
+}
+
+export async function updateUser(ms: number): Promise<IProfileUpdateResponse> {
+  return new Promise((resolve) =>
+    setTimeout(
+      () =>
+        resolve(
+          true
+            ? { errors: null, data: true }
+            : { errors: ['Не удалось обновить данные профиля!'], data: false }
+        ),
+      ms
+    )
+  );
 }

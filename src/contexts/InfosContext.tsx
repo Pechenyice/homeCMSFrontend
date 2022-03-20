@@ -1,10 +1,12 @@
 import { FC, useState } from 'react';
 import { IEvent } from 'types/interfaces';
 import { createContext } from 'react';
+import { InfosList } from 'components';
 
 export interface IInfosContextValues {
   addInfo: (text: string) => void;
   removeInfo: (id: number) => void;
+  removeAllInfos: () => void;
   infos: IEvent[];
 }
 
@@ -22,14 +24,20 @@ export const InfosProvider: FC = ({ children }) => {
     setInfos(infos.filter((e) => e.id !== id));
   };
 
+  const removeAllInfos = () => {
+    setInfos([]);
+  };
+
   return (
     <InfosContext.Provider
       value={{
         infos,
         addInfo,
         removeInfo,
+        removeAllInfos,
       }}
     >
+      <InfosList />
       {children}
     </InfosContext.Provider>
   );
